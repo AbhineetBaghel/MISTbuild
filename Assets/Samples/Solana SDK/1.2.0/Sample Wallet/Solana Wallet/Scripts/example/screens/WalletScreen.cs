@@ -8,6 +8,7 @@ using codebase.utility;
 using Cysharp.Threading.Tasks;
 using Solana.Unity.Extensions;
 using Solana.Unity.Rpc.Types;
+using UnityEngine.SceneManagement;
 
 // ReSharper disable once CheckNamespace
 
@@ -46,6 +47,8 @@ namespace Solana.Unity.SDK.Example
         private static TokenMintResolver _tokenResolver;
         private bool _isLoadingTokens = false;
 
+        public Button changeBtn;
+
         public void Start()
         {
             refreshBtn.onClick.AddListener(RefreshWallet);
@@ -69,6 +72,8 @@ namespace Solana.Unity.SDK.Example
             {
                 manager.ShowScreen(this, "swap_screen_ag");
             });
+
+            
 
             logoutBtn.onClick.AddListener(() =>
             {
