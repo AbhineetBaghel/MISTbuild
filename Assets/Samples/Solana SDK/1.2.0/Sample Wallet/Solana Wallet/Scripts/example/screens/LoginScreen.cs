@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Solana.Unity.Wallet;
-using UnityEngine.SceneManagement;
 
 // ReSharper disable once CheckNamespace
 
@@ -117,11 +116,6 @@ namespace Solana.Unity.SDK.Example
         {
             var wallet = GameObject.Find("wallet");
             wallet.SetActive(false);
-            
-
         }
-
-        
     }
-    
 }
