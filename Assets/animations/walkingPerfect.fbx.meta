@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a42b8921971b7274798f7a0ade3daa21
+guid: 6e8ae0455a5767045a6e7c5d244a1b3a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: idle
+      name: run
       takeName: mixamo.com
-      internalID: -203655887218126122
+      internalID: 1827226128182048838
       firstFrame: 0
-      lastFrame: 462
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -60,7 +60,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 2
     isReadable: 0
   meshes:
     lODScreenPercentages: []
