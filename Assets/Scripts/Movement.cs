@@ -24,12 +24,17 @@ public class Movement : MonoBehaviour
     private bool sprinting;
     private bool jumping;
 
-    private bool grounded = false; 
+    private bool grounded = false;
+
+    Animator animator;
+
+
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
     }
 
    
@@ -40,6 +45,10 @@ public class Movement : MonoBehaviour
 
         sprinting = Input.GetButton("Sprint");
         jumping = Input.GetButton("Jump");
+
+         
+  
+        
     }
 
     
@@ -63,13 +72,23 @@ public class Movement : MonoBehaviour
            else if (input.magnitude > 0.5f)
             {
                 rb.AddForce(CalculateMovement(sprinting ? sprintSpeed : walkSpeed), ForceMode.VelocityChange);
+                Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
+                animator.SetFloat("X", localVelocity.x);
+                animator.SetFloat("Y", localVelocity.y);
+                animator.SetBool("isMoving", true);
+
             }
+
             else
             {
                 var velocity1 = rb.velocity;
                 velocity1 = new Vector3(velocity1.x * 0.2f * Time.fixedDeltaTime, velocity1.y, velocity1.z * 0.2f * Time.fixedDeltaTime);
                 rb.velocity = velocity1;
+                animator.SetBool("isMoving", false);
+
             }
+
+            
         }
 
         else

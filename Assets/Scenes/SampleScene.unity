@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33744fd5abcd82d41ad538050915afc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2402485920629165054, guid: e56e3111af2e4574691c5ebf79aea61b, type: 3}
+  player: {fileID: 2402485920629165054, guid: f155ffc0fae720e4cbaea06bba864708, type: 3}
   spawnPoints:
   - {fileID: 1643889699}
   - {fileID: 1995107820}
@@ -6475,7 +6475,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1841469205}
   m_HandleRect: {fileID: 1841469204}
   m_Direction: 0
-  m_Value: -0.000002029091
+  m_Value: -0.0000010145455
   m_Size: 0.92794853
   m_NumberOfSteps: 0
   m_OnValueChanged:
