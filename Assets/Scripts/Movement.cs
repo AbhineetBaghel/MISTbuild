@@ -52,9 +52,9 @@ public class Movement : MonoBehaviour
         {
             animator.SetBool(isRunningHash, false);
         }
-         
-  
+
         
+
     }
 
     

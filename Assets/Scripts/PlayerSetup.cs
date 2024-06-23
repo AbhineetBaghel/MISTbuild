@@ -15,6 +15,9 @@ public class PlayerSetup : MonoBehaviour
 
     public Transform TPweaponHolder;
 
+
+
+
     
     public void IsLocalPlayer()
     {
