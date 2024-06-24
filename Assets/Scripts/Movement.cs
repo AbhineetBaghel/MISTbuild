@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
 
     private bool grounded = false;
 
-    Animator animator;
+     public Animator animator;
 
     int isRunningHash;
     
@@ -35,7 +35,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
+        //animator = GetComponentInChildren<Animator>();
         isRunningHash = Animator.StringToHash("isRunning");
     }
 
