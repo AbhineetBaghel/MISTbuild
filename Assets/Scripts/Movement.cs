@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
 
     private bool grounded = false;
 
-     public Animator animator;
+    public Animator animator;
 
     int isRunningHash;
     

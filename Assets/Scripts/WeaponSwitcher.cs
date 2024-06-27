@@ -8,17 +8,22 @@ public class WeaponSwitcher : MonoBehaviour
     public PhotonView playerSetupView;
 
 
+    
+
+
     private int selectedWeapon = 0;
     // Start is called before the first frame update
     void Start()
     {
         SelectWeapon();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         int previousSelectedWeapon = selectedWeapon; 
+
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -63,6 +68,9 @@ public class WeaponSwitcher : MonoBehaviour
                 selectedWeapon -= 1;
             }
         }
+
+       
+       
     }
 
     void SelectWeapon ()
@@ -90,5 +98,10 @@ public class WeaponSwitcher : MonoBehaviour
 
             i++;
         }
+
+       
+
     }
+
+     
 }

@@ -96,6 +96,7 @@ public class Weapon : MonoBehaviour
             ammoText.text = ammo + "/" + magAmmo;
             shootingSound.Play();
 
+
            
 
             Fire();
