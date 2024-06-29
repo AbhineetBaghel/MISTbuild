@@ -31,9 +31,9 @@ public class Weapon : MonoBehaviour
     public TextMeshProUGUI magText;
     public TextMeshProUGUI ammoText;
 
-    [Header("Animation")]
-    public Animation animation;
-    public AnimationClip reload;
+    //[Header("Animation")]
+    //public Animation animation;
+    //public AnimationClip reload;
 
     [Header("Recoil Settings")]
     //[Range(0, 1)]
@@ -86,7 +86,7 @@ public class Weapon : MonoBehaviour
         if (nextFire > 0)
             nextFire -= Time.deltaTime;
 
-      if (Input.GetButton("Fire1") && nextFire <= 0 && ammo > 0 && animation.isPlaying == false)
+      if (Input.GetButton("Fire1") && nextFire <= 0 && ammo > 0) //&& animation.isPlaying == false)
         {
             nextFire = 1 / fireRate;
 
@@ -128,7 +128,7 @@ public class Weapon : MonoBehaviour
     {
        
         
-        animation.Play(reload.name);
+        //animation.Play(reload.name);
        
 
         if (mag>0)

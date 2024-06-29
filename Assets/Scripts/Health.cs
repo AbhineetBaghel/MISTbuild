@@ -1,4 +1,4 @@
-/*using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -27,8 +27,7 @@ public class Health : MonoBehaviour
 
         if (health <= 0 )
         {
-            animator.SetBool("isDying", true);
-
+            
             if (isLocalPlayer)
 
             RoomManager.instance.SpawnPlayer();
@@ -37,16 +36,12 @@ public class Health : MonoBehaviour
              Destroy(gameObject);
         }
 
-        else
-        {
-            animator.SetBool("isDying", false);
-        }
     }
 
 }
-*/
 
-using System.Collections;
+
+/* using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -96,3 +91,4 @@ public class Health : MonoBehaviour
         Destroy(gameObject);
     }
 }
+*/

@@ -448,6 +448,7 @@ MonoBehaviour:
   sprintSpeed: 14
   airControl: 0.5
   jumpHeight: 5
+  animator: {fileID: 0}
 --- !u!54 &387386870436808409
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -15,17 +15,29 @@ public class PlayerSetup : MonoBehaviour
 
     public Transform TPweaponHolder;
 
+    public GameObject Playerbody;
 
 
 
-    
+
+   //void Start()
+  //  {
+    //    Playerbody = GameObject.Find("/TestPlayer/SK_Character_Samurai_Ninja_01");
+  //  }
+
+
     public void IsLocalPlayer()
     {
         movement.enabled = true;
         camera.SetActive(true);
 
         TPweaponHolder.gameObject.SetActive(false);
+
+       
+        Playerbody.SetActive(false);
+
       
+
     }
 
     [PunRPC]
