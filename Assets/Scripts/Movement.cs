@@ -29,6 +29,8 @@ public class Movement : MonoBehaviour
     public Animator animator;
 
     int isRunningHash;
+
+    //float adsCamFov;
     
 
 
@@ -37,6 +39,10 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         //animator = GetComponentInChildren<Animator>();
         isRunningHash = Animator.StringToHash("isRunning");
+
+        //adsCamFov = 60f;
+
+       // Camera.main.fieldOfView = 60;
     }
 
    
@@ -53,7 +59,16 @@ public class Movement : MonoBehaviour
             animator.SetBool(isRunningHash, false);
         }
 
-        
+        if (Input.GetMouseButton(1))
+        {
+            Camera.main.fieldOfView = 30;  
+        }
+
+        if (!Input.GetMouseButton(1))
+        {
+            Camera.main.fieldOfView = 60;
+        }
+
 
     }
 

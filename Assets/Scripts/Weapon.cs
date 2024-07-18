@@ -15,6 +15,7 @@ public class Weapon : MonoBehaviour
 
     [Header("VFX")]
     public GameObject hitVFX;
+    public GameObject hitVFX2;
     //public GameObject hit1VFX;
 
 
@@ -83,6 +84,8 @@ public class Weapon : MonoBehaviour
     }
     void Update()
     {
+
+        hitVFX.SetActive(true);
         if (nextFire > 0)
             nextFire -= Time.deltaTime;
 
@@ -96,7 +99,7 @@ public class Weapon : MonoBehaviour
             ammoText.text = ammo + "/" + magAmmo;
             shootingSound.Play();
 
-
+             
            
 
             Fire();
@@ -148,7 +151,7 @@ public class Weapon : MonoBehaviour
 
     void Fire()
     {
-        
+
         recoiling = true;
         recovering = false;
 
@@ -156,23 +159,50 @@ public class Weapon : MonoBehaviour
 
         RaycastHit hit;
 
+        /* if (Physics.Raycast(ray.origin, ray.direction, out hit, 100f))
+         {
+             hitVFX.SetActive(false);
+             hitVFX2.SetActive(true);
+             PhotonNetwork.Instantiate(hitVFX.name, hit.point, Quaternion.identity);
+
+             if (hit.transform.gameObject.GetComponent<Health>())
+             {
+
+                 PhotonNetwork.LocalPlayer.AddScore(damage);
+
+                 if (damage > hit.transform.gameObject.GetComponent<Health>().health)
+                 {
+                     //kill
+                     PhotonNetwork.LocalPlayer.AddScore(100);
+                 }
+
+
+               hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage",RpcTarget.All, damage);
+             }
+         }
+        */
+
+
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 100f))
         {
-            PhotonNetwork.Instantiate(hitVFX.name, hit.point, Quaternion.identity);
-
             if (hit.transform.gameObject.GetComponent<Health>())
             {
+                hitVFX.SetActive(false);
+                hitVFX2.SetActive(true);
+                PhotonNetwork.Instantiate(hitVFX2.name, hit.point, Quaternion.identity);
 
                 PhotonNetwork.LocalPlayer.AddScore(damage);
-
                 if (damage > hit.transform.gameObject.GetComponent<Health>().health)
                 {
-                    //kill
                     PhotonNetwork.LocalPlayer.AddScore(100);
                 }
-
-
-              hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage",RpcTarget.All, damage);
+                hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage);
+            }
+            else
+            {
+                hitVFX.SetActive(true);
+                hitVFX2.SetActive(false);
+                PhotonNetwork.Instantiate(hitVFX.name, hit.point, Quaternion.identity);
             }
         }
     }
