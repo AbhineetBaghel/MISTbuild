@@ -6,7 +6,7 @@ using Photon.Pun;
 using TMPro;
 using Photon.Pun.UtilityScripts;
 using UnityEngine.SceneManagement;
-using UnityEditor.SearchService;
+//using UnityEditor.SearchService;
 
 public class Leaderboard : MonoBehaviour
 {
