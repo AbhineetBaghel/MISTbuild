@@ -5,6 +5,8 @@ using System.Linq;
 using Photon.Pun;
 using TMPro;
 using Photon.Pun.UtilityScripts;
+using UnityEngine.SceneManagement;
+using UnityEditor.SearchService;
 
 public class Leaderboard : MonoBehaviour
 {
@@ -18,6 +20,10 @@ public class Leaderboard : MonoBehaviour
     [Space]
     public TextMeshProUGUI[] scoreTexts;
     public TextMeshProUGUI[] nameTexts;
+
+    public string GameOver;
+
+
 
     private void Start()
     {
@@ -55,5 +61,11 @@ public class Leaderboard : MonoBehaviour
     private void Update()
     {
         playersHolder.SetActive(Input.GetKey(KeyCode.Tab));
+
+        if(SceneManager.GetActiveScene().name == GameOver)
+        {
+            // If it is, make sure the object is active
+            playersHolder.SetActive(true);
+        }
     }
 }
