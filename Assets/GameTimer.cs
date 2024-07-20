@@ -61,7 +61,7 @@ public class GameTimer : MonoBehaviourPunCallbacks
     void EndGame()
     {
         Debug.Log(" Over!");
-        isGameActive = false;
+        //isGameActive = false;
         photonView.RPC("GameOver", RpcTarget.All);
         SceneManager.LoadScene("GameOver");
 
