@@ -22,11 +22,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private string nickname = "unnanmed";
 
-    public string roomNameToJoin = "test"; 
+    public string roomNameToJoin = "test";
 
-     void Awake()
+    private GameTimer gameTimer;
+
+    void Awake()
     {
         instance = this;
+        gameTimer = GetComponent<GameTimer>();
     }
 
     public void ChangeNickname(string _name)
@@ -58,9 +61,22 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         SpawnPlayer();
 
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartGame();
+        }
 
+       
     }
-     
+
+    private void StartGame()
+    {
+        if (gameTimer != null)
+        {
+            gameTimer.StartTimer();
+        }
+    }
+
     public void SpawnPlayer()
     {
         Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
@@ -76,6 +92,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
         _player.GetComponent<PhotonView>().RPC("SetNickname", RpcTarget.AllBuffered, nickname);
         PhotonNetwork.LocalPlayer.NickName = nickname;
 
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartGame();
+        }
     }
 
 
