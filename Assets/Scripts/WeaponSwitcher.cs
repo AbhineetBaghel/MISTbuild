@@ -8,7 +8,7 @@ public class WeaponSwitcher : MonoBehaviour
     public PhotonView playerSetupView;
 
 
-    
+    public GameObject playerArms;
 
 
     private int selectedWeapon = 0;
@@ -87,15 +87,18 @@ public class WeaponSwitcher : MonoBehaviour
 
         foreach (Transform _weapon in transform)
         {
+
             if ( i == selectedWeapon)
             {
                 _weapon.gameObject.SetActive(true);
+                //playerArms.SetActive(true);
             }
             else
             {
                 _weapon.gameObject.SetActive(false);
+                //playerArms.SetActive(true);
             }
-
+            playerArms.SetActive(true);
             i++;
         }
 

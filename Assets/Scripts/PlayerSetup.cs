@@ -17,6 +17,8 @@ public class PlayerSetup : MonoBehaviour
 
     public GameObject Playerbody;
 
+  //  public GameObject playerArms;
+
 
 
 
@@ -35,6 +37,8 @@ public class PlayerSetup : MonoBehaviour
 
        
         Playerbody.SetActive(false);
+
+       // playerArms.SetActive(true);
 
       
 

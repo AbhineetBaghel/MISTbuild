@@ -990,7 +990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827618a7ff56c5c4f83a8b3e9ac6fd6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameDuration: 50
+  gameDuration: 500
   scriptsToDisable:
   - {fileID: 1586525170}
 --- !u!114 &376050103
@@ -1586,7 +1586,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8557790716903515915, guid: 01ce4482f5933c148ab309cc2315eb8d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 01ce4482f5933c148ab309cc2315eb8d, type: 3}
 --- !u!1 &534892540
 GameObject:
@@ -4172,7 +4175,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1841469205}
   m_HandleRect: {fileID: 1841469204}
   m_Direction: 0
-  m_Value: -0.0000015218199
+  m_Value: -0.0000020290931
   m_Size: 0.9279486
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5410,6 +5413,10 @@ PrefabInstance:
     - target: {fileID: 4458874088208814316, guid: 491ee1a0f3cc6e9499a910a57b780c1a, type: 3}
       propertyPath: m_Name
       value: Leaderboard
+      objectReference: {fileID: 0}
+    - target: {fileID: 4458874088208814316, guid: 491ee1a0f3cc6e9499a910a57b780c1a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
