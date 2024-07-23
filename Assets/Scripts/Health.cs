@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.Animations.Rigging;
+
 
 public class Health : MonoBehaviour
 {
@@ -10,12 +12,19 @@ public class Health : MonoBehaviour
     public bool isLocalPlayer;
     Animator animator;
 
+    //public GameObject disableRigForDeathAniamation;
+
+   // public RigBuilder afterDeath;
+
     [Header("UI")]
     public TextMeshProUGUI healthText;
+
+    public RigBuilder rig;
 
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        
     }
 
     [PunRPC]
@@ -27,13 +36,24 @@ public class Health : MonoBehaviour
 
         if (health <= 0 )
         {
-            
+            // Destroy(RigBuilder);
+            //disableRigForDeathAniamation.SetActive(false);
+
+            rig.enabled= false ;
+
+            animator.SetBool("isDead", true);
+
+            Debug.Log("isdead");
+
+            Destroy(gameObject, this.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
             if (isLocalPlayer)
 
             RoomManager.instance.SpawnPlayer();
 
+           // Destroy(gameObject);
 
-             Destroy(gameObject);
+            Debug.Log("dead");
         }
 
     }
