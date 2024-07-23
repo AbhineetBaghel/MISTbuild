@@ -1318,6 +1318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   isLocalPlayer: 0
+  isDying: 0
   healthText: {fileID: 2871498546799049345}
   rig: {fileID: 1162229603455307984}
 --- !u!114 &4349700522046948870

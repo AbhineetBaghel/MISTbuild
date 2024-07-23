@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 
 
+
+
+
+
 public class Health : MonoBehaviour
 {
     public int health;
@@ -15,6 +19,8 @@ public class Health : MonoBehaviour
     Animator animator;
 
     public bool isDying = false;
+
+   // public GameObject enableLeaderboardAfterDeath;
 
     //public GameObject disableRigForDeathAniamation;
 
@@ -28,7 +34,8 @@ public class Health : MonoBehaviour
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
-        
+       // enableLeaderboardAfterDeath.SetActive(false);
+
     }
 
     
@@ -49,10 +56,12 @@ public class Health : MonoBehaviour
             // Destroy(RigBuilder);
             //disableRigForDeathAniamation.SetActive(false);
             isDying = true;
+
+           // enableLeaderboardAfterDeath.SetActive(true);
             
 
             GetComponent<Movement>().enabled = false;
-            GetComponent<MouseLook>().enabled = false;
+           // GetComponent<MouseLook>().enabled = false;
            
 
             rig.enabled= false ;
@@ -63,21 +72,22 @@ public class Health : MonoBehaviour
 
             //  Destroy(gameObject, this.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).length);
 
-            Destroy(gameObject, 2);
+            
 
-            await Task.Delay(3000);
-            health = 100;
+           // await Task.Delay(3000);
+          //  health = 100;
 
             if (isLocalPlayer)
-            {
+          
                 
-                Debug.Log("spawn1");
+               // Debug.Log("spawn1");
                 RoomManager.instance.SpawnPlayer();
-                //GetComponent<MouseLook>().enabled = true;
+                 //GetComponent<MouseLook>().enabled = true;
+                //enableLeaderboardAfterDeath.SetActive(false);
+                Destroy(gameObject);
 
-                
 
-            }
+
 
             // Destroy(gameObject,1);
 
@@ -93,6 +103,8 @@ public class Health : MonoBehaviour
 
     
 }
+
+
 
 
 /* using System.Collections;
