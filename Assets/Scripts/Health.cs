@@ -4,6 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.Animations.Rigging;
+using System.Threading.Tasks;
+using Unity.VisualScripting;
 
 
 public class Health : MonoBehaviour
@@ -11,6 +13,8 @@ public class Health : MonoBehaviour
     public int health;
     public bool isLocalPlayer;
     Animator animator;
+
+    public bool isDying = false;
 
     //public GameObject disableRigForDeathAniamation;
 
@@ -27,17 +31,29 @@ public class Health : MonoBehaviour
         
     }
 
+    
+
     [PunRPC]
-    public void TakeDamage(int _damage)
+    public async void TakeDamage(int _damage)
     {
-        health -= _damage;
+        if (isDying == false)
+        {
+            health -= _damage;
+        }
+        
 
         healthText.text = health.ToString();
 
-        if (health <= 0 )
+        if (health <= 0 && isDying == false)
         {
             // Destroy(RigBuilder);
             //disableRigForDeathAniamation.SetActive(false);
+            isDying = true;
+            
+
+            GetComponent<Movement>().enabled = false;
+            GetComponent<MouseLook>().enabled = false;
+           
 
             rig.enabled= false ;
 
@@ -45,19 +61,37 @@ public class Health : MonoBehaviour
 
             Debug.Log("isdead");
 
-            Destroy(gameObject, this.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).length);
+            //  Destroy(gameObject, this.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
+            Destroy(gameObject, 2);
+
+            await Task.Delay(3000);
+            health = 100;
 
             if (isLocalPlayer)
+            {
+                
+                Debug.Log("spawn1");
+                RoomManager.instance.SpawnPlayer();
+                //GetComponent<MouseLook>().enabled = true;
 
-            RoomManager.instance.SpawnPlayer();
+                
 
-           // Destroy(gameObject);
+            }
+
+            // Destroy(gameObject,1);
+
+            // Destroy(gameObject, this.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
+            isDying = false;
 
             Debug.Log("dead");
+            
         }
 
     }
 
+    
 }
 
 
