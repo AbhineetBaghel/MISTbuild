@@ -4,10 +4,14 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using Photon.Pun.UtilityScripts;
+using UnityEngine.UI;
+
 
 public class Weapon : MonoBehaviour
 {
     public int damage;
+
+    public Image ammoCircle;
 
     public Camera camera;
 
@@ -62,13 +66,17 @@ public class Weapon : MonoBehaviour
     AudioSource shootingSound;
 
    
-    
+    void SetAmmo()
+    {
+        ammoCircle.fillAmount = (float)ammo / magAmmo;
+    }
 
 
      void Start()
     {
         magText.text = mag.ToString();
         ammoText.text = ammo + "/" + magAmmo;
+        SetAmmo();
 
         originalPosition = transform.localPosition;
 
@@ -97,6 +105,8 @@ public class Weapon : MonoBehaviour
 
             magText.text = mag.ToString();
             ammoText.text = ammo + "/" + magAmmo;
+            SetAmmo();
+
             shootingSound.Play();
 
              
@@ -143,6 +153,7 @@ public class Weapon : MonoBehaviour
 
         magText.text = mag.ToString();
         ammoText.text = ammo + "/" + magAmmo;
+        SetAmmo();
 
         
 
