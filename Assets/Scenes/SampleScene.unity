@@ -1643,10 +1643,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8557790716903515915, guid: 01ce4482f5933c148ab309cc2315eb8d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01ce4482f5933c148ab309cc2315eb8d, type: 3}
 --- !u!1 &534892540
 GameObject:
@@ -4392,7 +4389,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1841469205}
   m_HandleRect: {fileID: 1841469204}
   m_Direction: 0
-  m_Value: -0.0000015218199
+  m_Value: -0.0000020290931
   m_Size: 0.9279486
   m_NumberOfSteps: 0
   m_OnValueChanged:

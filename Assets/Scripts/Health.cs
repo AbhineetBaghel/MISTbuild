@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.Animations.Rigging;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 
 
@@ -19,6 +20,9 @@ public class Health : MonoBehaviour
     Animator animator;
 
     public bool isDying = false;
+    public RectTransform healthBar;
+    private float originalHealthBarSize;
+
 
    // public GameObject enableLeaderboardAfterDeath;
 
@@ -34,11 +38,16 @@ public class Health : MonoBehaviour
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
-       // enableLeaderboardAfterDeath.SetActive(false);
+        // enableLeaderboardAfterDeath.SetActive(false);
+        originalHealthBarSize = healthBar.sizeDelta.x;
 
     }
 
-    
+    //private void Update()
+    //{
+       // healthBar.sizeDelta = new Vector2(originalHealthBarSize * health / 100f, healthBar.sizeDelta.y);
+   // }
+
 
     [PunRPC]
     public async void TakeDamage(int _damage)
@@ -46,6 +55,7 @@ public class Health : MonoBehaviour
         if (isDying == false)
         {
             health -= _damage;
+            healthBar.sizeDelta = new Vector2(originalHealthBarSize * health / 100f, healthBar.sizeDelta.y);
         }
         
 
@@ -72,22 +82,21 @@ public class Health : MonoBehaviour
 
             //  Destroy(gameObject, this.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).length);
 
-            
+            Destroy(gameObject,1);
 
-           // await Task.Delay(3000);
-          //  health = 100;
+            // await Task.Delay(3000);
+             health = 100;
 
             if (isLocalPlayer)
-          
+            {
+                RoomManager.instance.SpawnPlayer();
+
+            }
                 
                // Debug.Log("spawn1");
-                RoomManager.instance.SpawnPlayer();
-                 //GetComponent<MouseLook>().enabled = true;
-                //enableLeaderboardAfterDeath.SetActive(false);
-                Destroy(gameObject);
-
-
-
+                
+            //GetComponent<MouseLook>().enabled = true;
+            //enableLeaderboardAfterDeath.SetActive(false);
 
             // Destroy(gameObject,1);
 
