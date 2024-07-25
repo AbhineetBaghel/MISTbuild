@@ -26,6 +26,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private GameTimer gameTimer;
 
+  //  public GameObject createScreen;
+   // public GameObject joinScreen;
+
     void Awake()
     {
         instance = this;
@@ -39,18 +42,31 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public void JoinRoomButtonPressed()
     {
-        Debug.Log("Connecting..");
+       Debug.Log("Connecting..");
 
-        PhotonNetwork.JoinOrCreateRoom(roomNameToJoin, null, null);
+       PhotonNetwork.JoinOrCreateRoom(roomNameToJoin, null, null);
+
+        nameUI.SetActive(false);
+       connectingUI.SetActive(true);
+    }
+
+  /*  public  void JoinRoomButtonPressed(string _namee)
+    {
+        //Debug.Log("Connecting.. custom room create");
+
+     //   PhotonNetwork.JoinOrCreateRoom(_namee, null, null);
+
+       // joinScreen.SetActive(false);
+       // createScreen.SetActive(true);
 
         nameUI.SetActive(false);
         connectingUI.SetActive(true);
     }
 
+    */
 
 
-   
-    
+
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
