@@ -31,6 +31,8 @@ public class SolanaManager : MonoBehaviour
     public GameObject joinGameRoom;
     public GameObject disableConnectRoom;
 
+   
+
 
     //public RoomManager fakeRoomManager;
 

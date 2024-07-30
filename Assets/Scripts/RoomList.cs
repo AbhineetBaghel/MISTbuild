@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using Unity.VisualScripting;
 
 public class RoomList : MonoBehaviourPunCallbacks
 {
@@ -11,6 +12,8 @@ public class RoomList : MonoBehaviourPunCallbacks
 
     public GameObject roomManagerGameobject;
     public RoomManager roomManager;
+
+    public bool controls;
 
 
     [Header("UI")] public Transform roomListParent;
@@ -34,7 +37,9 @@ public class RoomList : MonoBehaviourPunCallbacks
     IEnumerator Start()
     {
        //precaution
-       
+        
+
+
         if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LeaveRoom();
@@ -115,4 +120,5 @@ public class RoomList : MonoBehaviourPunCallbacks
         gameObject.SetActive(false);
     }
 
+    
 }
