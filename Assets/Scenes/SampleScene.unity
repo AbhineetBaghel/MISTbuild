@@ -6566,7 +6566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0668fe02f209e94e94d27b830a62c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginButton: {fileID: 2143959019}
+  loginButton: {fileID: 4923786459595215707, guid: 10caa0c9f0ca1114ea538356935b2f74, type: 3}
   logoutButton: {fileID: 595575850}
   publicKeyText: {fileID: 1776615154}
 --- !u!114 &1556727415

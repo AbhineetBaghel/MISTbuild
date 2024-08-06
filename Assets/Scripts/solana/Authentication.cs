@@ -1,6 +1,7 @@
 using Solana.Unity.SDK;
 using Solana.Unity.Wallet;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -33,6 +34,7 @@ public class Authentication : MonoBehaviour
         Debug.Log("Login");
         await Web3.Instance.LoginWalletAdapter();
         publicKeyText.text = Web3.Account.PublicKey.ToString();
+
     }
 
     public void Logout()
@@ -45,6 +47,7 @@ public class Authentication : MonoBehaviour
     {
         loginButton.gameObject.SetActive(false);
         logoutButton.gameObject.SetActive(true);
+        SceneManager.LoadScene("SampleScene");
     }
 
     private void OnLogout()
