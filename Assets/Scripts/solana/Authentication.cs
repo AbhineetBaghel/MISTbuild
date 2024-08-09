@@ -10,6 +10,11 @@ public class Authentication : MonoBehaviour
     [SerializeField] private Button loginButton;
     [SerializeField] private Button logoutButton;
     [SerializeField] private TMPro.TextMeshProUGUI publicKeyText;
+    [SerializeField] public GameObject CreateRoomBtn;
+    [SerializeField] public GameObject JoinRoomBtn;
+    [SerializeField] public GameObject JoinRoomList;
+
+
 
     private void Awake() 
     {
@@ -34,6 +39,10 @@ public class Authentication : MonoBehaviour
         Debug.Log("Login");
         await Web3.Instance.LoginWalletAdapter();
         publicKeyText.text = Web3.Account.PublicKey.ToString();
+        CreateRoomBtn.SetActive(true);
+        JoinRoomBtn.SetActive(true);
+        JoinRoomList.SetActive(true);
+
 
     }
 
@@ -47,7 +56,7 @@ public class Authentication : MonoBehaviour
     {
         loginButton.gameObject.SetActive(false);
         logoutButton.gameObject.SetActive(true);
-        SceneManager.LoadScene("SampleScene");
+       // SceneManager.LoadScene("SampleScene");
     }
 
     private void OnLogout()
