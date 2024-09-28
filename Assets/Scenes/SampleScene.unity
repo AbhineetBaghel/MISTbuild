@@ -6056,6 +6056,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8925047338828962749, guid: 9344b13f8e447c14c808681d9f6d78f0, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7629862171422188344, guid: 9344b13f8e447c14c808681d9f6d78f0, type: 3}
     - {fileID: 3644556731483193054, guid: 9344b13f8e447c14c808681d9f6d78f0, type: 3}

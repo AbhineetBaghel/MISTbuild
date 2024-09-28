@@ -1,65 +1,60 @@
+using System;
 using System.Text;
-using Solana.Unity.Wallet;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
-using Solana.Unity.SDK;
-using Solana.Unity.Rpc.Models;
-using Game.Program;
-using Game;
-using Solana.Unity.Rpc;
-using Solana.Unity.Rpc.Builders;
 using TMPro;
 using UnityEngine.UI;
-using Solana.Unity.Programs;
-using System.Collections.Generic;
-using System;
-using System.Numerics;
-using System.Threading.Tasks;
+using Solana.Unity.Wallet;
+using Solana.Unity.Rpc;
+using Solana.Unity.Rpc.Models;
 using Solana.Unity.Rpc.Core.Http;
-
-// using Newtonsoft.Json;
-
+using Solana.Unity.Rpc.Messages;
+using Solana.Unity.SDK;
+using Solana.Unity.Programs;
+using Game.Program;
+using Game.Accounts;
 
 public class SolanaManager : MonoBehaviour
 {
-    public static PublicKey programId = new("EpwFSsE5z58Tc9MrUa16868pkUG43uAXY6edjyJw35bq");
-    private PublicKey globalStatePDA;
+    public static PublicKey ProgramId = new("EpwFSsE5z58Tc9MrUa16868pkUG43uAXY6edjyJw35bq");
+    private PublicKey _globalStatePDA;
     public TextMeshProUGUI availableRoomsText;
     private List<string> availableRooms = new List<string>();
-    // public TMP_Dropdown roomDropdown; // Add reference to your Dropdown
-    public Dropdown dropdown;
+    public Dropdown roomDropdown;
 
     public GameObject joinGameRoom;
     public GameObject disableConnectRoom;
 
-   
-
-
-    //public RoomManager fakeRoomManager;
-
     private void Awake()
     {
-
-        //fakeRoomManager = GameObject.FindObjectOfType(typeof(RoomManager)) as RoomManager;
-        Web3.OnLogin += _ =>
-        {
-            PublicKey.TryFindProgramAddress(new[]{
-                Encoding.UTF8.GetBytes("global-state")
-            }, programId, out globalStatePDA, out var bump);
-
-            CheckGlobalStateInitialized();
-        };
+        Web3.OnLogin += OnLogin;
     }
+
+    private void OnDestroy()
+    {
+        Web3.OnLogin -= OnLogin;
+    }
+
+    private void OnLogin(Account _)
+    {
+        PublicKey.TryFindProgramAddress(new[]{
+            Encoding.UTF8.GetBytes("global-state")
+        }, ProgramId, out _globalStatePDA, out var _);
+
+        CheckGlobalStateInitialized();
+    }
+
     private async void CheckGlobalStateInitialized()
     {
         var rpcClient = ClientFactory.GetClient(Cluster.DevNet);
-        var accountInfo = await rpcClient.GetAccountInfoAsync(globalStatePDA);
+        var accountInfo = await rpcClient.GetAccountInfoAsync(_globalStatePDA);
 
-        if (accountInfo.Result != null && accountInfo.Result.Value != null)
+        if (accountInfo.Result?.Value != null)
         {
-            // Global state is initialized
-            FetchTotalRooms();
-            FetchAvailableRooms();
-            Debug.LogError("Global state init");
+            Debug.Log("Global state initialized");
+            await FetchTotalRooms();
+            await FetchAvailableRooms();
         }
         else
         {
@@ -74,16 +69,12 @@ public class SolanaManager : MonoBehaviour
 
         try
         {
-            var accountInfo = await rpcClient.GetAccountInfoAsync(globalStatePDA);
+            var accountInfo = await rpcClient.GetAccountInfoAsync(_globalStatePDA);
 
-            if (accountInfo.WasSuccessful && accountInfo.Result.Value != null)
+            if (accountInfo.WasSuccessful && accountInfo.Result?.Value != null)
             {
-                var globalStateData = accountInfo.Result.Value.Data;
-                var globalState = Convert.FromBase64String(globalStateData[0]);
-                Debug.Log($"Global state raw data: {BitConverter.ToString(globalState)}");
-
-                // Extract total rooms from bytes 8-11 (index 8 to 11)
-                int totalRooms = BitConverter.ToInt32(globalState, 8);
+                var globalStateData = Convert.FromBase64String(accountInfo.Result.Value.Data[0]);
+                var totalRooms = BitConverter.ToInt32(globalStateData, 8);
                 Debug.Log($"Total Rooms Created: {totalRooms}");
             }
             else
@@ -104,69 +95,33 @@ public class SolanaManager : MonoBehaviour
 
         try
         {
-            var accountInfo = await rpcClient.GetAccountInfoAsync(globalStatePDA);
+            var accountInfo = await rpcClient.GetAccountInfoAsync(_globalStatePDA);
 
-            if (accountInfo.WasSuccessful && accountInfo.Result.Value != null)
+            if (accountInfo.WasSuccessful && accountInfo.Result?.Value != null)
             {
-                var globalStateData = accountInfo.Result.Value.Data;
-                var globalState = Convert.FromBase64String(globalStateData[0]);
-                Debug.Log($"Global state raw data: {BitConverter.ToString(globalState)}");
-                int totalRoomsCount = BitConverter.ToInt32(globalState, 8);
+                var globalStateData = Convert.FromBase64String(accountInfo.Result.Value.Data[0]);
+                int totalRoomsCount = BitConverter.ToInt32(globalStateData, 8);
                 List<string> rooms = new List<string>();
 
                 for (int i = 0; i < totalRoomsCount; i++)
                 {
-                    byte[] roomIdBytes = new byte[8];
-                    BigInteger bigI = new BigInteger(i);
-                    byte[] bigIBytes = bigI.ToByteArray();
-                    Array.Copy(bigIBytes, roomIdBytes, Math.Min(bigIBytes.Length, 8));
-
+                    byte[] roomIdBytes = BitConverter.GetBytes((ulong)i);
                     PublicKey.TryFindProgramAddress(new[]{
-                    Encoding.UTF8.GetBytes("room"),
-                    roomIdBytes
-                }, programId, out PublicKey roomPDA, out var bump);
+                        Encoding.UTF8.GetBytes("room"),
+                        roomIdBytes
+                    }, ProgramId, out PublicKey roomPDA, out var _);
 
-                    Debug.Log($"Fetching room {i + 1} at {roomPDA}");
+                    var roomAccountInfo = await rpcClient.GetAccountInfoAsync(roomPDA);
 
-                    try
+                    if (roomAccountInfo.WasSuccessful && roomAccountInfo.Result?.Value != null)
                     {
-                        var roomAccountInfo = await rpcClient.GetAccountInfoAsync(roomPDA);
-
-                        if (roomAccountInfo.WasSuccessful && roomAccountInfo.Result.Value != null)
-                        {
-                            rooms.Add($"Room {i + 1}");
-                            availableRooms.Add(roomPDA.ToString());
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        if (e.Message.Contains("Account does not exist"))
-                        {
-                            Debug.Log($"Room {i} does not exist, skipping.");
-                        }
-                        else
-                        {
-                            Debug.LogError($"Error fetching room {i}: {e.Message}");
-                        }
+                        rooms.Add($"Room {i + 1}");
+                        availableRooms.Add(roomPDA.ToString());
                     }
                 }
 
-                // availableRoomsText.text = $"Available Rooms: {string.Join(", ", rooms)}";
-                // availableRooms = rooms;
-
-                // roomDropdown.ClearOptions();
-                // roomDropdown.AddOptions(availableRooms);
-                availableRoomsText.text = $"Available Rooms actual: {string.Join(", ", rooms)}";
-                Debug.Log($"Available Rooms: {rooms}");
-                // UpdateAvailableRoomsText();
-                if (dropdown != null && availableRooms.Count > 0)
-                {
-                    dropdown.options.Clear();
-                    foreach (string option in availableRooms)
-                    {
-                        dropdown.options.Add(new Dropdown.OptionData(option));
-                    }
-                }
+                availableRoomsText.text = $"Available Rooms: {string.Join(", ", rooms)}";
+                UpdateDropdown(availableRooms);
             }
             else
             {
@@ -179,12 +134,16 @@ public class SolanaManager : MonoBehaviour
         }
     }
 
-    private void UpdateAvailableRoomsText()
+    private void UpdateDropdown(List<string> options)
     {
-        availableRoomsText.text = string.Join("\n", availableRooms);
+        if (roomDropdown != null && options.Count > 0)
+        {
+            roomDropdown.ClearOptions();
+            roomDropdown.AddOptions(options);
+        }
     }
 
-    private async void CreateRoomAsync()
+    public async void CreateRoom()
     {
         Debug.Log("Creating room...");
         var rpcClient = ClientFactory.GetClient(Cluster.DevNet);
@@ -197,72 +156,52 @@ public class SolanaManager : MonoBehaviour
                 return;
             }
 
-            var globalStateInfo = await rpcClient.GetAccountInfoAsync(globalStatePDA);
-            if (globalStateInfo.Result == null || globalStateInfo.Result.Value == null)
+            var globalStateInfo = await rpcClient.GetAccountInfoAsync(_globalStatePDA);
+            if (globalStateInfo.Result?.Value == null)
             {
                 Debug.LogError("Please initialize the global state first.");
                 return;
             }
 
             var globalStateData = globalStateInfo.Result.Value.Data;
-            var globalState = Game.Accounts.GlobalState.Deserialize(Convert.FromBase64String(globalStateData[0]));
+            var globalState = GlobalState.Deserialize(Convert.FromBase64String(globalStateData[0]));
             ulong currentRoomId = globalState.TotalRooms;
-            // ulong currentRoomId = 6;
-
-            Debug.Log($"Current room ID: {currentRoomId}");
 
             byte[] roomIdBytes = BitConverter.GetBytes(currentRoomId);
-            if (!BitConverter.IsLittleEndian)
-                Array.Reverse(roomIdBytes);
-
-            // Find Program Address
             PublicKey.TryFindProgramAddress(new[]{
-            Encoding.UTF8.GetBytes("room"),
-            roomIdBytes
-        }, programId, out PublicKey roomPDA, out var bump);
+                Encoding.UTF8.GetBytes("room"),
+                roomIdBytes
+            }, ProgramId, out PublicKey roomPDA, out var _);
 
-            Debug.Log($"Room PDA: {roomPDA}");
-            Debug.Log($"globalStatePDA: {globalStatePDA}");
-            Debug.Log($"Web3.Account.PublicKey: {Web3.Account.PublicKey}");
-            Debug.Log($"SystemProgram.ProgramIdKey: {SystemProgram.ProgramIdKey}");
-
-            var createRoomAccounts = new Game.Program.CreateRoomAccounts()
+            var createRoomAccounts = new CreateRoomAccounts
             {
                 Room = roomPDA,
-                GlobalState = globalStatePDA,
+                GlobalState = _globalStatePDA,
                 Creator = Web3.Account.PublicKey,
                 SystemProgram = SystemProgram.ProgramIdKey
             };
 
-            var recentBlockHash = await rpcClient.GetRecentBlockHashAsync();
-            if (!recentBlockHash.WasSuccessful)
+            var latestBlockhashResponse = await rpcClient.GetLatestBlockHashAsync();
+            if (!latestBlockhashResponse.WasSuccessful)
             {
-                Debug.LogError($"Failed to get recent block hash: {recentBlockHash.Reason}");
+                Debug.LogError($"Failed to get latest block hash: {latestBlockhashResponse.Reason}");
                 return;
             }
 
-            var instruction = Game.Program.GameProgram.CreateRoom(createRoomAccounts, programId);
+            var instruction = GameProgram.CreateRoom(createRoomAccounts, ProgramId);
 
-            Debug.Log($"Instruction: {instruction}");
-
-            var tx = new Transaction()
+            var tx = new Transaction
             {
-                RecentBlockHash = recentBlockHash.Result.Value.Blockhash,
+                RecentBlockHash = latestBlockhashResponse.Result.Value.Blockhash,
                 FeePayer = Web3.Account.PublicKey,
                 Instructions = new List<TransactionInstruction> { instruction },
                 Signatures = new List<SignaturePubKeyPair>()
             };
 
-
-            Debug.Log($"Transaction details: {tx}");
-
             RequestResult<string> result = await Web3.Wallet.SignAndSendTransaction(tx);
             if (result.WasSuccessful)
             {
-                Debug.Log($"Transaction signature: {result.Result}");
                 Debug.Log($"Room created at: {roomPDA}");
-
-                // GetComponent<RoomManager>().JoinRoomButtonPressed();
                 joinGameRoom.SetActive(true);
                 disableConnectRoom.SetActive(false);
 
@@ -280,12 +219,8 @@ public class SolanaManager : MonoBehaviour
             Debug.LogError($"Stack trace: {e.StackTrace}");
         }
     }
-    public void OnCreateRoomButtonClick()
-    {
-        CreateRoomAsync();
-    }
 
-    private async void JoinRoomAsync()
+    public async void JoinRoom()
     {
         Debug.Log("Joining room...");
         var rpcClient = ClientFactory.GetClient(Cluster.DevNet);
@@ -298,34 +233,34 @@ public class SolanaManager : MonoBehaviour
                 return;
             }
 
-            if (dropdown.options.Count == 0)
+            if (roomDropdown.options.Count == 0)
             {
                 Debug.LogError("Please select a room to join.");
                 return;
             }
 
-            string selectedRoom = dropdown.options[dropdown.value].text;
+            string selectedRoom = roomDropdown.options[roomDropdown.value].text;
             PublicKey roomPDA = new PublicKey(selectedRoom);
 
-            var joinRoomAccounts = new Game.Program.JoinRoomAccounts()
+            var joinRoomAccounts = new JoinRoomAccounts
             {
                 Room = roomPDA,
                 Player = Web3.Account.PublicKey,
                 SystemProgram = SystemProgram.ProgramIdKey
             };
 
-            var recentBlockHash = await rpcClient.GetRecentBlockHashAsync();
-            if (!recentBlockHash.WasSuccessful)
+            var latestBlockhashResponse = await rpcClient.GetLatestBlockHashAsync();
+            if (!latestBlockhashResponse.WasSuccessful)
             {
-                Debug.LogError($"Failed to get recent block hash: {recentBlockHash.Reason}");
+                Debug.LogError($"Failed to get latest block hash: {latestBlockhashResponse.Reason}");
                 return;
             }
 
-            var instruction = Game.Program.GameProgram.JoinRoom(joinRoomAccounts, programId);
+            var instruction = GameProgram.JoinRoom(joinRoomAccounts, ProgramId);
 
-            var tx = new Transaction()
+            var tx = new Transaction
             {
-                RecentBlockHash = recentBlockHash.Result.Value.Blockhash,
+                RecentBlockHash = latestBlockhashResponse.Result.Value.Blockhash,
                 FeePayer = Web3.Account.PublicKey,
                 Instructions = new List<TransactionInstruction> { instruction },
                 Signatures = new List<SignaturePubKeyPair>()
@@ -334,11 +269,9 @@ public class SolanaManager : MonoBehaviour
             RequestResult<string> result = await Web3.Wallet.SignAndSendTransaction(tx);
             if (result.WasSuccessful)
             {
-                Debug.Log($"Transaction signature: {result.Result}");
                 Debug.Log($"Joined room: {roomPDA}");
                 joinGameRoom.SetActive(true);
                 disableConnectRoom.SetActive(false);
-                // await FetchAvailableRooms(); // Refresh the room list
             }
             else
             {
@@ -352,8 +285,13 @@ public class SolanaManager : MonoBehaviour
         }
     }
 
+    public void OnCreateRoomButtonClick()
+    {
+        CreateRoom();
+    }
+
     public void OnJoinRoomButtonClick()
     {
-        JoinRoomAsync();
+        JoinRoom();
     }
 }
