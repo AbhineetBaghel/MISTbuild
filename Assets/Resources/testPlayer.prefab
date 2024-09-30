@@ -1320,6 +1320,7 @@ MonoBehaviour:
   isLocalPlayer: 0
   isDying: 0
   healthBar: {fileID: 4021374330662724177}
+  leaderboardAfterDeath: {fileID: 1670037898440724823, guid: 7ff71351bc8789a4d8279f5406793ad7, type: 3}
   healthText: {fileID: 2871498546799049345}
   rig: {fileID: 1162229603455307984}
 --- !u!114 &4349700522046948870

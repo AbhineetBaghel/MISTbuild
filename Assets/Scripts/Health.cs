@@ -22,13 +22,8 @@ public class Health : MonoBehaviour
     public bool isDying = false;
     public RectTransform healthBar;
     private float originalHealthBarSize;
+    public GameObject leaderboardAfterDeath;
 
-
-   // public GameObject enableLeaderboardAfterDeath;
-
-    //public GameObject disableRigForDeathAniamation;
-
-   // public RigBuilder afterDeath;
 
     [Header("UI")]
     public TextMeshProUGUI healthText;
@@ -42,11 +37,6 @@ public class Health : MonoBehaviour
         originalHealthBarSize = healthBar.sizeDelta.x;
 
     }
-
-    //private void Update()
-    //{
-       // healthBar.sizeDelta = new Vector2(originalHealthBarSize * health / 100f, healthBar.sizeDelta.y);
-   // }
 
 
     [PunRPC]
@@ -63,44 +53,31 @@ public class Health : MonoBehaviour
 
         if (health <= 0 && isDying == false)
         {
-            // Destroy(RigBuilder);
-            //disableRigForDeathAniamation.SetActive(false);
-            isDying = true;
-
-           // enableLeaderboardAfterDeath.SetActive(true);
-            
-
-            GetComponent<Movement>().enabled = false;
-           // GetComponent<MouseLook>().enabled = false;
            
-
+            isDying = true;
+            GetComponent<Movement>().enabled = false;
             rig.enabled= false ;
 
             animator.SetBool("isDead", true);
 
             Debug.Log("isdead");
 
-            //  Destroy(gameObject, this.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).length);
 
             Destroy(gameObject,1);
+
+            leaderboardAfterDeath.SetActive(true);
 
             // await Task.Delay(3000);
              health = 100;
 
-            if (isLocalPlayer)
+
+
+            if (isLocalPlayer )
             {
                 RoomManager.instance.SpawnPlayer();
 
             }
                 
-               // Debug.Log("spawn1");
-                
-            //GetComponent<MouseLook>().enabled = true;
-            //enableLeaderboardAfterDeath.SetActive(false);
-
-            // Destroy(gameObject,1);
-
-            // Destroy(gameObject, this.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).length);
 
             isDying = false;
 
@@ -110,60 +87,8 @@ public class Health : MonoBehaviour
 
     }
 
+
+
     
 }
 
-
-
-
-/* using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Photon.Pun;
-using TMPro;
-
-public class Health : MonoBehaviour
-{
-    public int health;
-    public bool isLocalPlayer;
-    Animator animator;
-
-    [Header("UI")]
-    public TextMeshProUGUI healthText;
-
-    void Start()
-    {
-        animator = GetComponentInChildren<Animator>();
-    }
-
-    [PunRPC]
-    public void TakeDamage(int _damage)
-    {
-        health -= _damage;
-
-        healthText.text = health.ToString();
-
-        if (health <= 0)
-        {
-            animator.SetBool("isDying", true);
-
-            if (isLocalPlayer)
-            {
-                StartCoroutine(HandleDeath());
-            }
-        }
-    }
-
-    private IEnumerator HandleDeath()
-    {
-        // Assume your death animation length is 3 seconds. Adjust as necessary.
-        yield return new WaitForSeconds(3f);
-
-        // Respawn player
-        RoomManager.instance.SpawnPlayer();
-
-        // Destroy the current game object
-        Destroy(gameObject);
-    }
-}
-*/

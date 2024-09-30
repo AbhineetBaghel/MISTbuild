@@ -14,10 +14,11 @@ using Solana.Unity.SDK;
 using Solana.Unity.Programs;
 using Game.Program;
 using Game.Accounts;
+using static System.Net.WebRequestMethods;
 
 public class SolanaManager : MonoBehaviour
 {
-    public static PublicKey ProgramId = new("EpwFSsE5z58Tc9MrUa16868pkUG43uAXY6edjyJw35bq");
+    public static PublicKey ProgramId = new("2LVh4dbY5tCq3hRYCyismKUgUKT2mtnb7fY8Rkrv5jvS");
     private PublicKey _globalStatePDA;
     public TextMeshProUGUI availableRoomsText;
     private List<string> availableRooms = new List<string>();
@@ -47,7 +48,8 @@ public class SolanaManager : MonoBehaviour
 
     private async void CheckGlobalStateInitialized()
     {
-        var rpcClient = ClientFactory.GetClient(Cluster.DevNet);
+         var rpcClient = ClientFactory.GetClient(Cluster.TestNet);
+        //var rpcClient = ClientFactory.GetClient("https://api.testnet.sonic.game");
         var accountInfo = await rpcClient.GetAccountInfoAsync(_globalStatePDA);
 
         if (accountInfo.Result?.Value != null)
@@ -65,7 +67,8 @@ public class SolanaManager : MonoBehaviour
     public async Task FetchTotalRooms()
     {
         Debug.Log("Fetching total rooms...");
-        var rpcClient = ClientFactory.GetClient(Cluster.DevNet);
+        var rpcClient = ClientFactory.GetClient(Cluster.TestNet);
+       // var rpcClient = ClientFactory.GetClient("https://api.testnet.sonic.game");
 
         try
         {
@@ -91,7 +94,8 @@ public class SolanaManager : MonoBehaviour
     public async Task FetchAvailableRooms()
     {
         Debug.Log("Fetching available rooms...");
-        var rpcClient = ClientFactory.GetClient(Cluster.DevNet);
+        var rpcClient = ClientFactory.GetClient(Cluster.TestNet);
+        //var rpcClient = ClientFactory.GetClient("https://api.testnet.sonic.game");
 
         try
         {
@@ -146,7 +150,8 @@ public class SolanaManager : MonoBehaviour
     public async void CreateRoom()
     {
         Debug.Log("Creating room...");
-        var rpcClient = ClientFactory.GetClient(Cluster.DevNet);
+        var rpcClient = ClientFactory.GetClient(Cluster.TestNet);
+        //var rpcClient = ClientFactory.GetClient("https://api.testnet.sonic.game");
 
         try
         {
@@ -223,7 +228,8 @@ public class SolanaManager : MonoBehaviour
     public async void JoinRoom()
     {
         Debug.Log("Joining room...");
-        var rpcClient = ClientFactory.GetClient(Cluster.DevNet);
+        var rpcClient = ClientFactory.GetClient(Cluster.TestNet);
+        //var rpcClient = ClientFactory.GetClient("https://api.testnet.sonic.game");
 
         try
         {
