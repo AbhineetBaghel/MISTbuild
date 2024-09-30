@@ -27,7 +27,7 @@ namespace Solana.Unity.SDK
         [Header("Rpc Settings")]
 
         //public RpcCluster rpcCluster = RpcCluster.DevNet;
-        public RpcCluster rpcCluster = RpcCluster.TestNet;
+        public RpcCluster rpcCluster = RpcCluster.DevNet;
         public string customRpc = "https://api.testnet.sonic.game";
         public string webSocketsRpc;
         public bool autoConnectOnStartup;
