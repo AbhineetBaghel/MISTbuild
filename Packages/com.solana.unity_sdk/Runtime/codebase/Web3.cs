@@ -28,7 +28,8 @@ namespace Solana.Unity.SDK
 
         //public RpcCluster rpcCluster = RpcCluster.DevNet;
         public RpcCluster rpcCluster = RpcCluster.DevNet;
-        public string customRpc = "https://api.testnet.sonic.game";
+        // public string customRpc = "https://api.testnet.sonic.game";
+        public string customRpc = "";
         public string webSocketsRpc;
         public bool autoConnectOnStartup;
         public WalletBase WalletBase {
