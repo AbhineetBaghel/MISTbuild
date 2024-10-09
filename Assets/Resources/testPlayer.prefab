@@ -1417,7 +1417,7 @@ MonoBehaviour:
   - {fileID: 6503161230989332895}
   - {fileID: 4349700522046948870}
   - {fileID: 6414528447062316384}
-  sceneViewId: 0
+  sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &3935678797441462407
@@ -4335,9 +4335,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clampInDegrees: {x: 360, y: 180}
+  lockCursor: 1
   sensitivity: {x: 2, y: 2}
   smoothing: {x: 3, y: 3}
   characterBody: {fileID: 2402485920629165054}
+  scoped: 0
 --- !u!1 &8557790716903515915
 GameObject:
   m_ObjectHideFlags: 0

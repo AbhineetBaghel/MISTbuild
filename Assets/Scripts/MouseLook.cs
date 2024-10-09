@@ -1,103 +1,4 @@
-﻿/* using UnityEngine;
-
-public class MouseLook : MonoBehaviour
-{
-    public static MouseLook instance;
-
-    [Header("Settings")]
-    public Vector2 clampInDegrees = new Vector2(360, 180);
-    public bool lockCursor = true;
-    [Space]
-    private Vector2 sensitivity = new Vector2(2, 2);
-    [Space]
-    public Vector2 smoothing = new Vector2(3, 3);
-
-    [Header("First Person")]
-    public GameObject characterBody;
-
-    private Vector2 targetDirection;
-    private Vector2 targetCharacterDirection;
-
-    private Vector2 _mouseAbsolute;
-    private Vector2 _smoothMouse;
-
-    private Vector2 mouseDelta;
-
-    [HideInInspector]
-    public bool scoped;
-
-    [SerializeField]
-    private Vector2 sensitivitynew = new Vector2(2, 2);
-
-    void Start()
-    {
-        instance = this;
-
-        // Set target direction to the camera's initial orientation.
-        targetDirection = transform.localRotation.eulerAngles;
-
-        // Set target direction for the character body to its inital state.
-        if (characterBody)
-            targetCharacterDirection = characterBody.transform.localRotation.eulerAngles;
-        
-        if (lockCursor)
-            LockCursor();
-
-    }
-
-    public void LockCursor()
-    {
-        // make the cursor hidden and locked
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    void Update()
-    {
-        // Allow the script to clamp based on a desired target value.
-        var targetOrientation = Quaternion.Euler(targetDirection);
-        var targetCharacterOrientation = Quaternion.Euler(targetCharacterDirection);
-
-        // Get raw mouse input for a cleaner reading on more sensitive mice.
-        mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-
-        // Scale input against the sensitivity setting and multiply that against the smoothing value.
-        mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity.x * smoothing.x, sensitivity.y * smoothing.y));
-
-        // Interpolate mouse movement over time to apply smoothing delta.
-        _smoothMouse.x = Mathf.Lerp(_smoothMouse.x, mouseDelta.x, 1f / smoothing.x);
-        _smoothMouse.y = Mathf.Lerp(_smoothMouse.y, mouseDelta.y, 1f / smoothing.y);
-
-        // Find the absolute mouse movement value from point zero.
-        _mouseAbsolute += _smoothMouse;
-
-        // Clamp and apply the local x value first, so as not to be affected by world transforms.
-        if (clampInDegrees.x < 360)
-            _mouseAbsolute.x = Mathf.Clamp(_mouseAbsolute.x, -clampInDegrees.x * 0.5f, clampInDegrees.x * 0.5f);
-
-        // Then clamp and apply the global y value.
-        if (clampInDegrees.y < 360)
-            _mouseAbsolute.y = Mathf.Clamp(_mouseAbsolute.y, -clampInDegrees.y * 0.5f, clampInDegrees.y * 0.5f);
-
-        transform.localRotation = Quaternion.AngleAxis(-_mouseAbsolute.y, targetOrientation * Vector3.right) * targetOrientation;
-
-        // If there's a character body that acts as a parent to the camera
-        if (characterBody)
-        {
-            var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, Vector3.up);
-            characterBody.transform.localRotation = yRotation * targetCharacterOrientation;
-        }
-        else
-        {
-            var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, transform.InverseTransformDirection(Vector3.up));
-            transform.localRotation *= yRotation;
-        }
-    }
-}
-*/
-
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
@@ -130,45 +31,26 @@ public class MouseLook : MonoBehaviour
         if (characterBody)
             targetCharacterDirection = characterBody.transform.localRotation.eulerAngles;
 
-        if (lockCursor)
-            LockCursor();
+      //  if (lockCursor)
+        //    LockCursor();
     }
 
-    public void LockCursor()
-    {
-        // make the cursor hidden and locked
-        // Cursor.lockState = CursorLockMode.Locked;
-        // Cursor.visible = false;
-    }
+    //public void LockCursor()
+    //{
+    //    // make the cursor hidden and locked
+    //    Cursor.lockState = CursorLockMode.Locked;
+    //    Cursor.visible = false;
+    //}
 
     void Update()
     {
         // Allow the script to clamp based on a desired target value.
         var targetOrientation = Quaternion.Euler(targetDirection);
         var targetCharacterOrientation = Quaternion.Euler(targetCharacterDirection);
-
-
-        // // Get raw mouse input for a cleaner reading on more sensitive mice.
-        // mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-        // // Scale input against the sensitivity setting and multiply that against the smoothing value.
-        // mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity.x * smoothing.x, sensitivity.y * smoothing.y));
-
-        float mouseX = 0;
-        float mouseY = 0;
-
-
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
-        {
-            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-               return;
-
-                mouseX = Input.GetTouch(0).deltaPosition.x;
-                mouseY = Input.GetTouch(0).deltaPosition.y;
-
-        }
-
-
-
+        // Get raw mouse input for a cleaner reading on more sensitive mice.
+        mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        // Scale input against the sensitivity setting and multiply that against the smoothing value.
+        mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity.x * smoothing.x, sensitivity.y * smoothing.y));
         // Interpolate mouse movement over time to apply smoothing delta.
         _smoothMouse.x = Mathf.Lerp(_smoothMouse.x, mouseDelta.x, 1f / smoothing.x);
         _smoothMouse.y = Mathf.Lerp(_smoothMouse.y, mouseDelta.y, 1f / smoothing.y);
@@ -192,9 +74,6 @@ public class MouseLook : MonoBehaviour
             var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, transform.InverseTransformDirection(Vector3.up));
             transform.localRotation *= yRotation;
         }
-
-
-
     }
 
     public void SetSensitivity(float newSensitivity)
@@ -202,120 +81,3 @@ public class MouseLook : MonoBehaviour
         sensitivity = new Vector2(newSensitivity, newSensitivity);
     }
 }
-
-
-//using UnityEngine;
-//using UnityEngine.EventSystems;
-
-//public class MouseLook : MonoBehaviour
-//{
-//    public static MouseLook instance;
-
-//    [Header("Settings")]
-//    public Vector2 clampInDegrees = new Vector2(360, 180);
-//    public Vector2 sensitivity = new Vector2(2, 2);
-//    public Vector2 smoothing = new Vector2(3, 3);
-
-//    [Header("First Person")]
-//    public GameObject characterBody;
-
-//    private Vector2 touchDelta;
-//    private Vector2 targetDirection;
-//    private Vector2 targetCharacterDirection;
-//    private Vector2 _touchAbsolute;
-//    private Vector2 _smoothTouch;
-
-//    private Vector2 lastTouchPosition;
-//    private bool isTouching = false;
-
-//    void Start()
-//    {
-//        instance = this;
-//        // Set target direction to the camera's initial orientation.
-//        targetDirection = transform.localRotation.eulerAngles;
-//        // Set target direction for the character body to its initial state.
-//        if (characterBody)
-//            targetCharacterDirection = characterBody.transform.localRotation.eulerAngles;
-//    }
-
-//    void Update()
-//    {
-//        HandleTouchInput();
-
-//        // Allow the script to clamp based on a desired target value.
-//        var targetOrientation = Quaternion.Euler(targetDirection);
-//        var targetCharacterOrientation = Quaternion.Euler(targetCharacterDirection);
-
-//        // Interpolate touch movement over time to apply smoothing delta.
-//        _smoothTouch.x = Mathf.Lerp(_smoothTouch.x, touchDelta.x, 1f / smoothing.x);
-//        _smoothTouch.y = Mathf.Lerp(_smoothTouch.y, touchDelta.y, 1f / smoothing.y);
-
-//        // Find the absolute touch movement value from point zero.
-//        _touchAbsolute += _smoothTouch;
-
-//        // Clamp and apply the local x value first, so as not to be affected by world transforms.
-//        if (clampInDegrees.x < 360)
-//            _touchAbsolute.x = Mathf.Clamp(_touchAbsolute.x, -clampInDegrees.x * 0.5f, clampInDegrees.x * 0.5f);
-
-//        // Then clamp and apply the global y value.
-//        if (clampInDegrees.y < 360)
-//            _touchAbsolute.y = Mathf.Clamp(_touchAbsolute.y, -clampInDegrees.y * 0.5f, clampInDegrees.y * 0.5f);
-
-//        transform.localRotation = Quaternion.AngleAxis(-_touchAbsolute.y, targetOrientation * Vector3.right) * targetOrientation;
-
-//        // If there's a character body that acts as a parent to the camera
-//        if (characterBody)
-//        {
-//            var yRotation = Quaternion.AngleAxis(_touchAbsolute.x, Vector3.up);
-//            characterBody.transform.localRotation = yRotation * targetCharacterOrientation;
-//        }
-//        else
-//        {
-//            var yRotation = Quaternion.AngleAxis(_touchAbsolute.x, transform.InverseTransformDirection(Vector3.up));
-//            transform.localRotation *= yRotation;
-//        }
-//    }
-
-//    void HandleTouchInput()
-//    { 
-//        if (Input.touchCount > 0)
-//        {
-//            Touch touch = Input.GetTouch(0);
-
-//            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-//                return; 
-
-//            switch (touch.phase)
-//            {
-//                case TouchPhase.Began:
-//                    isTouching = true;
-//                    lastTouchPosition = touch.position;
-//                    break;
-
-//                case TouchPhase.Moved:
-//                    if (isTouching)
-//                    {
-//                        Vector2 deltaPosition = touch.position - lastTouchPosition;
-//                        touchDelta = new Vector2(deltaPosition.x, -deltaPosition.y) * sensitivity * 0.1f;
-//                        lastTouchPosition = touch.position;
-//                    }
-//                    break;
-
-//                case TouchPhase.Ended:
-//                case TouchPhase.Canceled:
-//                    isTouching = false;
-//                    touchDelta = Vector2.zero;
-//                    break;
-//            }
-//        }
-//        else
-//        {
-//            touchDelta = Vector2.zero;
-//        }
-//    }
-
-//    public void SetSensitivity(float newSensitivity)
-//    {
-//        sensitivity = new Vector2(newSensitivity, newSensitivity);
-//    }
-//}
