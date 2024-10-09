@@ -1,6 +1,7 @@
 # MIST
 
 **Quick Links**<br/>
+<br/>
 🎮 Live Link: http://demo-sigma-beryl.vercel.app<br/>
 🎥 Video Guide: https://www.youtube.com/watch?v=aVThCeTGQPM
 
