@@ -1,6 +1,7 @@
 # MIST
 
 Live Link: http://demo-sigma-beryl.vercel.app
+
 Video Guide: https://www.youtube.com/watch?v=aVThCeTGQPM
 
 Welcome to Mist, an exciting new multiplayer First-Person Shooter (FPS) game where you can play, compete, and earn!
