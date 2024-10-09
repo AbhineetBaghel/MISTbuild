@@ -5,7 +5,7 @@ using Photon.Pun;
 using TMPro;
 using Photon.Pun.UtilityScripts;
 using UnityEngine.UI;
-
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Weapon : MonoBehaviour
 {
@@ -97,7 +97,9 @@ public class Weapon : MonoBehaviour
         if (nextFire > 0)
             nextFire -= Time.deltaTime;
 
-      if (Input.GetButton("Fire1") && nextFire <= 0 && ammo > 0) //&& animation.isPlaying == false)
+    //   if (Input.GetButton("Fire1") && nextFire <= 0 && ammo > 0)     //&& animation.isPlaying == false)
+
+    if (CrossPlatformInputManager.GetButton("Shoot") && nextFire <= 0 && ammo > 0)
         {
             nextFire = 1 / fireRate;
 

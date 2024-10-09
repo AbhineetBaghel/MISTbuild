@@ -136,8 +136,8 @@ public class MouseLook : MonoBehaviour
     public void LockCursor()
     {
         // make the cursor hidden and locked
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
     }
 
     void Update()

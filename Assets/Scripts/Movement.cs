@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Movement : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class Movement : MonoBehaviour
 
     public Animator animator;
 
+    public Joystick joystick;
     int isRunningHash;
 
     //float adsCamFov;
@@ -48,11 +50,14 @@ public class Movement : MonoBehaviour
    
     void Update()
     {
-        input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+       // input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+       input = new Vector2(joystick.Horizontal, joystick.Vertical);
         input.Normalize();
 
         sprinting = Input.GetButton("Sprint");
-        jumping = Input.GetButton("Jump");
+        // jumping = Input.GetButton("Jump");
+
+        jumping = CrossPlatformInputManager.GetButton("Jump");
 
         if (!sprinting)
         {

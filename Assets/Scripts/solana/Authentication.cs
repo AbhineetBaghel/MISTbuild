@@ -3,12 +3,13 @@ using Solana.Unity.Wallet;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 
 public class Authentication : MonoBehaviour
 {
-    [SerializeField] private Button loginButton;
-    [SerializeField] private Button logoutButton;
+    [SerializeField] private UnityEngine.UI.Button loginButton;
+    [SerializeField] private UnityEngine.UI.Button logoutButton;
     [SerializeField] private TMPro.TextMeshProUGUI publicKeyText;
     [SerializeField] public GameObject CreateRoomBtn;
     [SerializeField] public GameObject JoinRoomBtn;

@@ -75,6 +75,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         roomCam.SetActive(false);
 
+        //enable the mobile controls from here
+
         SpawnPlayer();
 
         if (PhotonNetwork.IsMasterClient)
