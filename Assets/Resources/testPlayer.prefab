@@ -4335,11 +4335,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clampInDegrees: {x: 360, y: 180}
-  lockCursor: 1
   sensitivity: {x: 2, y: 2}
   smoothing: {x: 3, y: 3}
   characterBody: {fileID: 2402485920629165054}
-  scoped: 0
 --- !u!1 &8557790716903515915
 GameObject:
   m_ObjectHideFlags: 0
