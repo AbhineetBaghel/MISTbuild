@@ -1,7 +1,7 @@
 # MIST
 
-Quick Links
-🎮 Live Link: http://demo-sigma-beryl.vercel.app
+**Quick Links**
+🎮 Live Link: http://demo-sigma-beryl.vercel.app<br/>
 🎥 Video Guide: https://www.youtube.com/watch?v=aVThCeTGQPM
 
 Welcome to Mist
