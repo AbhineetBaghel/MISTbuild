@@ -15,15 +15,15 @@
  Trade weapons, characters, and accessories without limits in our on-chain Mist marketplace.<br/>
  🌐 Cross-Platform Compatibility
 
-  Play Mist on Mobile
-  Play Mist on PC
-  Available as Telegram mini apps
-  Public rooms for open play
-  Private rooms for friends and communities
+  Play Mist on Mobile<br/>
+  Play Mist on PC<br/>
+  Available as Telegram mini apps<br/>
+  Public rooms for open play<br/>
+  Private rooms for friends and communities<br/>
 
 
 
-🐦 Twitter: https://x.com/devs_mist
+🐦 Twitter: https://x.com/devs_mist<br/>
 📢 Telegram: https://t.me/MIST_Beta
 
 
