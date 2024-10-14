@@ -63,14 +63,12 @@ public class Health : MonoBehaviour
             Debug.Log("isdead");
 
 
-            Destroy(gameObject,1);
+            Destroy(gameObject);
 
             leaderboardAfterDeath.SetActive(true);
 
             // await Task.Delay(3000);
              health = 100;
-
-
 
             if (isLocalPlayer )
             {
