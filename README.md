@@ -2,6 +2,7 @@
 
 **Quick Links**<br/>
 <br/>
+🚀 Updated Docs are live here : https://mist-2.gitbook.io/mist
 🎮 Live Link: http://demo-sigma-beryl.vercel.app<br/>
 🎥 Video Guide: https://www.youtube.com/watch?v=aVThCeTGQPM
 
